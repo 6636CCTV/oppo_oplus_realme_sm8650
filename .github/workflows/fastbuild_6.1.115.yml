@@ -546,12 +546,8 @@ jobs:
           export CCACHE_HARDLINK="true"
           export CCACHE_DIR="${{ env.CCACHE_DIR }}"
           export CCACHE_MAXSIZE="3G"
-          if ! grep -q "^\s*sloppiness\s*=" "$CCACHE_DIR/ccache.conf"; then
-            echo "sloppiness = file_stat_matches,include_file_ctime,include_file_mtime,pch_defines,file_macro,time_macros" >> "$CCACHE_DIR/ccache.conf"
-          fi
-          if ! grep -q "^\s*ignore_headers_in_manifest\s*=" "$CCACHE_DIR/ccache.conf"; then
-            echo "ignore_headers_in_manifest = include/generated/autoconf.h" >> "$CCACHE_DIR/ccache.conf"
-          fi
+          echo "sloppiness = file_stat_matches,include_file_ctime,include_file_mtime,pch_defines,file_macro,time_macros" >> "$CCACHE_DIR/ccache.conf"
+          echo "ignore_headers_in_manifest = kernel_workspace/common/out/include/generated/autoconf.h common/out/include/generated/autoconf.h include/generated/autoconf.h" >> "$CCACHE_DIR/ccache.conf"
           
           cd kernel_workspace/common
           wget https://github.com/cctv18/oppo_oplus_realme_sm8650/raw/refs/heads/main/lib/libfakestat.so
